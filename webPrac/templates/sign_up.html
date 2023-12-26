@@ -1,0 +1,100 @@
+{{define "sign_up.html"}}
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/static/bootstrap-5.3.2-dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Aresus-cloud</title>
+
+    <style>
+        .bkground{
+            width: 100%;
+            height: 100%;
+            background-image: url('/static/paper1.jpeg');
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" class="bkground">
+        <div id="myAlert" class="alert alert-danger hide fade show float-top" style="width: 30%; left: 35%; display: none;" role="alert">
+            <p id="alertMsg">user name or pass word is null</p>
+            <button type="button" class="btn-close position-absolute end-0" style="padding: 5px;" id="closebtn"></button>
+        </div>
+        <div id="successAlert" class="alert alert-success hide fade show float-top" style="width: 30%; left: 35%; display: none;" role="alert">
+            sign up success ! <br> will return to the home page in 3 seconds!!
+            <button type="successBtn" class="btn-close position-absolute end-0" style="padding: 5px;" id="closeSuccess"></button>
+        </div>
+        <div class="bg-dark opacity-75" style="width: 30%; position: absolute; left: 35%; top: 20%; border-radius: 5px;">
+            <form class="gap-3 p-4">
+                <p class="fs-3 text-light">Please Sign Up</p>
+                <div class="mb-3">
+                    <label for="username" class="form-label text-light">username</label>
+                    <input type="text" class="form-control" id="username">
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label text-light">password</label>
+                    <input type="password" class="form-control" id="password">
+                </div>
+                <button type="submit" class="btn btn-primary" id="doSignUp">Sign Up</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/static/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/jquery-2.1.1.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#doSignUp").click(function(e) {
+                e.preventDefault();
+
+                let url = window.location.protocol + "//" + window.location.host + "/doSignUp";
+                let name = $("#username").val();
+                let word = $("#password").val();
+                
+                if (name.length == 0 || word.length == 0) {
+                    $('#myAlert').css("display","inline-flex");
+                    return;
+                }
+
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    async: false,
+                    data: {username:name, password:word},
+                    success: function(res) {
+                        if (res != undefined && res == "success") {
+                            $('#successAlert').css('display','inline-flex');
+                            window.setTimeout(function(){
+                                window.location.href = window.location.protocol + "//" + window.location.host + "/"
+                            }, 3000)
+                        } else {
+                            $('#alertMsg').text(res);
+                        $('#myAlert').css('display','inline-flex');
+                        }
+                    },
+                    error: function(err) {
+                        $('#alertMsg').text(err);
+                        $('#myAlert').css('display','inline-flex');
+                    }
+                });
+            })
+
+            $("#closebtn").click(function() {
+                $("#myAlert").css("display","none");
+            })
+
+            $('#successBtn').click(function() {
+                $('#successAlert').css("display","none");
+            })
+        })
+    </script>
+</body>
+
+
+</html>
+
+{{end}}

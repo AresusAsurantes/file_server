@@ -1,0 +1,39 @@
+{{ define "index_header.html" }}
+
+<nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
+    <div class="container-fluid">
+      <a class="navbar-brand text-light" href="#">Aresus-cloud</a>
+      <div class="d-flex justify-content-end">
+        <div>
+            <button id="signIn" class="btn btn-outline-light me-2" type="button">
+                Sign in
+            </button>
+          </div>
+          
+          <div>
+            <button id="signUp" class="btn btn-outline-light" type="button">
+                Sign up
+            </button>
+          </div>
+      </div>
+    </div>
+</nav>
+
+  <script src="/static/jquery-2.1.1.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $("button#signIn").click(function(){
+        let protocle = window.location.protocol;
+        let host = window.location.host;
+        window.location.href=protocle + "//" + host + "/signIn";
+      });
+
+      $("button#signUp").click(function () {
+        let protocol = window.location.protocol;
+        let host = window.location.host;
+        window.location.href=protocol + "//" + host + "/signUp";
+      })
+    });
+  </script>
+
+{{ end }}
