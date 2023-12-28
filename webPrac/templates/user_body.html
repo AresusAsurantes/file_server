@@ -1,4 +1,25 @@
 {{define "user_body.html"}}
 
+<div class="w-75 start-50 position-absolute translate-middle rounded-3" style="--bs-breadcrumb-divider: '>'; width: auto; top: 15%; position:absolute;">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb rounded-3 bg-light p-2 border">
+            {{range $idx, $dao := .FilePath}}
+                {{if lt $idx $.FilePathLen}}
+                    <li class="breadcrumb-item"><a href="#" class="text-dark">{{$dao}}</a></li>
+                {{else}}
+                    <li class="breadcrumb-item active text-dark" aria-current="page">{{$dao}}</li>
+                {{end}}
+            {{end}}
+        </ol>
+    </nav>
+</div>
+
+<div class="w-75 start-50 position-absolute translate-middle rounded-3" style="top: 25%; position: absolute;">
+    <ul class="list-group">
+        {{ range .FileInfos }}
+            <li class="list-group-item">{{ .Name }}</li>
+        {{end}}
+    </ul>
+</div>
 
 {{end}}

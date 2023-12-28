@@ -12,12 +12,13 @@ func errorHandleFunc(writer http.ResponseWriter, request *http.Request) {
 }
 
 func index(writer http.ResponseWriter, request *http.Request) {
-	// sessionId, err := getSessionIdFromRequest(request)
+	sessionId, err := getSessionIdFromRequest(request)
 
-	// if err != nil {
-	// 	tempFiles.ExecuteTemplate(writer, "index.html", nil)
-	// } else {
-	// 	getUserFiles(writer, request, sessionId)
-	// }
-	tempFiles.ExecuteTemplate(writer, "user.html", nil)
+	if err != nil {
+		tempFiles.ExecuteTemplate(writer, "index.html", nil)
+	} else {
+		getUserFiles(writer, request, sessionId)
+	}
+	// t := template.Must(template.ParseFiles("./templates/user.html", "./templates/user_body.html", "./templates/user_header.html"))
+	// t.ExecuteTemplate(writer, "user.html", testUserFile())
 }
